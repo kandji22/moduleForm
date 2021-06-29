@@ -31,3 +31,17 @@ function getAllNameFormulaires()
     echo json_encode($data);
     die();
 }
+
+function DeleteById($id)
+{
+    global $bdd;
+    try {
+        $req = $bdd->prepare('DELETE FROM formulaire WHERE id=:id');
+        $req->execute([
+            'id' => $id
+        ]);
+        echo 'le formulaire à été bien supprimer';
+    } catch (Exception $e) {
+        echo $e->getMessage();
+    }
+}

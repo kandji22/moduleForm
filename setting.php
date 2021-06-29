@@ -81,8 +81,33 @@
 
         //fonction de suppression formulaire
         function deleteRow(id) {
+
             if (id) {
-                console.log(id)
+                //body 
+                var mode = 'delete';
+                var id = id;
+                var data = new FormData();
+                data.append("id", id);
+                data.append("delete", mode);
+                //fetch method post
+                fetch("http://localhost:8888/Controleur/ajax.php", {
+                        method: "POST",
+                        body: data,
+                    })
+                    .then((res) => {
+                        return res.json();
+                    })
+                    .then((data) => {
+                        console.log(data);
+                    });
+            }
+            return
+        }
+
+        //function enable
+        function enableForm($id) {
+            if ($id) {
+                console.log($id)
             }
             return
         }
