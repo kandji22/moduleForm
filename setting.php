@@ -1,8 +1,5 @@
 <?php
 
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +27,7 @@
     <script src="http://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script>
+        var dataid;
         //body html formulaire en string et nom formulaire
         var setting = "setting";
         //ajax method post
@@ -63,11 +61,28 @@
                         actions = actions.concat(delet);
 
                         //action enable
-                        var enable = '<input type="radio" name="form" onclick="enableForm(' + data + ')">'
+                        var enable = '<input type="radio" name="form" onclick="enableForm(' + data + ')" >'
                         actions = actions.concat(enable);
 
                         return actions;
 
+                    },
+                },
+                {
+                    data: "statut",
+                    width: "20px",
+                    title: "Activate",
+                    render: function(data) {
+                        var activates = '';
+                        if (data == '1') {
+                            // enable checkbox
+                            var enable = '<p> ok </p>'
+                            activates = activates.concat(enable);
+                        } else {
+                            var disable = '<p> no </p>'
+                            activates = activates.concat(disable);
+                        }
+                        return activates;
                     }
                 },
             ],
@@ -78,6 +93,7 @@
             select: true
 
         })
+
 
         //fonction de suppression formulaire
         function deleteRow(id) {
@@ -107,7 +123,7 @@
         //function enable
         function enableForm($id) {
             if ($id) {
-                console.log($id)
+                console.log($id);
             }
             return
         }

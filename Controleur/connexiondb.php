@@ -25,7 +25,7 @@ function getAllNameFormulaires()
 {
     global $bdd;
     $data['data'] = [];
-    $req = $bdd->query('SELECT id,nom FROM formulaire');
+    $req = $bdd->query('SELECT statut,id,nom FROM formulaire');
     $rep = $req->fetchAll();
     $data['data'] = $rep;
     echo json_encode($data);
@@ -43,5 +43,15 @@ function DeleteById($id)
         echo 'le formulaire à été bien supprimer';
     } catch (Exception $e) {
         echo $e->getMessage();
+    }
+
+    function EnableForm($id)
+    {
+        global $bdd;
+        try {
+            $req = $bdd->query('UPDATE formulaire SET statut=1 WHERE id=' . $id);
+        } catch (Exception $e) {
+            echo $e->getMessage();
+        }
     }
 }
