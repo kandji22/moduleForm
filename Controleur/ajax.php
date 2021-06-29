@@ -20,6 +20,15 @@ if ($data['delete']) {
     die();
 }
 
+//si le paramétre enable est envoyé
+if ($data['enable']) {
+    $id = $data['id'];
+    $ret['message'] = EnableForm($id);
+    $ret['statut'] = "success";
+    echo json_encode($ret);
+    die();
+}
+
 $nameFormulaire = $data['formName'];
 $codeHtml = (string)$data['htmlForm'];
 

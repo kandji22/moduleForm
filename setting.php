@@ -121,9 +121,23 @@
         }
 
         //function enable
-        function enableForm($id) {
-            if ($id) {
-                console.log($id);
+        function enableForm(id) {
+            if (id) {
+                var mode = 'enable';
+                var data = new FormData();
+                data.append("id", id);
+                data.append("enable", mode);
+                //fetch method post
+                fetch("http://localhost:8888/Controleur/ajax.php", {
+                        method: "POST",
+                        body: data,
+                    })
+                    .then((res) => {
+                        return res.json();
+                    })
+                    .then((data) => {
+                        console.log(data);
+                    });
             }
             return
         }

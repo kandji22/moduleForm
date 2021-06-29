@@ -44,14 +44,16 @@ function DeleteById($id)
     } catch (Exception $e) {
         echo $e->getMessage();
     }
+}
 
-    function EnableForm($id)
-    {
-        global $bdd;
-        try {
-            $req = $bdd->query('UPDATE formulaire SET statut=1 WHERE id=' . $id);
-        } catch (Exception $e) {
-            echo $e->getMessage();
-        }
+function EnableForm($id)
+{
+    global $bdd;
+    try {
+        $bdd->exec('UPDATE formulaire SET statut=0');
+        $bdd->exec('UPDATE formulaire SET statut=1 WHERE id=' . $id);
+        echo "statut mis à jour";
+    } catch (Exception $e) {
+        echo $e->getMessage();
     }
 }
