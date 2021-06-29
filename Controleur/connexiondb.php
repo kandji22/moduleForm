@@ -57,3 +57,14 @@ function EnableForm($id)
         echo $e->getMessage();
     }
 }
+
+function showEnableFormToUser()
+{
+    global $bdd;
+    $rep['data'] = [];
+    $req = $bdd->query('SELECT codehtml FROM formulaire WHERE statut=1');
+    $reponse = $req->fetchAll();
+    $rep['data'] = $reponse;
+    echo json_encode($rep);
+    die();
+}

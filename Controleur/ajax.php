@@ -29,6 +29,10 @@ if ($data['enable']) {
     die();
 }
 
+if ($data['affiche']) {
+    showEnableFormToUser();
+}
+
 $nameFormulaire = $data['formName'];
 $codeHtml = (string)$data['htmlForm'];
 
