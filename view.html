@@ -18,7 +18,9 @@
     <title>Document</title>
   </head>
   <body>
-    <div class="offset-4 mt-4" id="formulaire"></div>
+    <form class="offset-4 mt-4" id="formulaire">
+      <input type="hidden" value="submission" name="submission" id="after" />
+    </form>
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery-ui.min.js"></script>
 
@@ -35,9 +37,35 @@
           return res.json();
         })
         .then((data) => {
+          var inputNameform =
+            '<input type="hidden" name="nomForm" value="' +
+            data["data"][0][1] +
+            '"/>';
+          //exemple de id user
+          var idUser = 5;
+          var inputUser =
+            '<input type="hidden" name="idUser" value="' + idUser + '"/>';
           var html = String(data["data"][0][0]);
+          $("#formulaire").append(inputNameform);
+          $("#formulaire").append(inputUser);
           $("#formulaire").append(html);
         });
+
+      //submission formulaire
+      $("#formulaire").on("submit", function (e) {
+        e.preventDefault();
+        var data = new FormData(document.getElementById("formulaire"));
+        fetch("http://localhost:8888/Controleur/ajax.php", {
+          method: "POST",
+          body: data,
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+          });
+      });
     </script>
     <style>
       #formulaire {

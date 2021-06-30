@@ -1,7 +1,7 @@
 <?php
 
 $bdd = new PDO("mysql:host=localhost;charset=utf8;dbname=webside", "root", "root");
-
+$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 function insertFormulaire($nameFormulaire, $codeHtml, $statut = 0)
 {
     global $bdd;
@@ -62,9 +62,33 @@ function showEnableFormToUser()
 {
     global $bdd;
     $rep['data'] = [];
-    $req = $bdd->query('SELECT codehtml FROM formulaire WHERE statut=1');
+    $req = $bdd->query('SELECT codehtml,nom FROM formulaire WHERE statut=1');
     $reponse = $req->fetchAll();
     $rep['data'] = $reponse;
     echo json_encode($rep);
     die();
+}
+
+function subsend($val)
+{
+    $jsonData = json_encode($val);
+    global $bdd;
+    try {
+        $req = $bdd->prepare('INSERT INTO feedback(person_data, formname, iduser) VALUES(:person_data, :formname, :iduser)');
+        $req->execute([
+
+            'person_data' => $jsonData,
+            'formname' => $val['nomForm'],
+            'iduser' => (int)$val['idUser'],
+        ]);
+        $rep['message'] = 'votre feadback à été bien enregistré';
+        $rep['statut'] = 'success';
+        echo json_encode($rep);
+        die;
+    } catch (Exception $e) {
+        $rep['message'] = $e->getMessage();
+        $rep['statut'] = 'error';
+        echo json_encode($rep);
+        die;
+    }
 }

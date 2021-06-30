@@ -33,6 +33,10 @@ if ($data['affiche']) {
     showEnableFormToUser();
 }
 
+if ($data['submission']) {
+    subsend($data);
+}
+
 $nameFormulaire = $data['formName'];
 $codeHtml = (string)$data['htmlForm'];
 
