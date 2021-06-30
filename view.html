@@ -63,6 +63,8 @@
             return res.json();
           })
           .then((data) => {
+            $("#formulaire").empty();
+            //ici faut afficher un message
             console.log(data);
           });
       });
